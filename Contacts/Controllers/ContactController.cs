@@ -42,5 +42,20 @@ namespace Contacts.Controllers
             await service.DeleteContactAsync(id);
             return Ok();
         }
+
+
+
+
+        //Добавил серверную пагинацию, так как изначально думал, что нужна клиентская
+        [HttpGet("paged/{page}/{size}")]
+        public async Task<IActionResult> GetPaged(int page, int size)
+        {
+            var (contacts, total) = await service.GetPages(page, size);
+            return Ok(new { data = contacts, total });
+        }
+
+
+
+
     }
 }
