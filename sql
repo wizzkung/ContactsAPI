@@ -46,3 +46,17 @@ as
  as
  delete from Contacts
  where id = @id
+
+добавил серверную пагинацию
+ ALTER proc [dbo].[pGetPaged] 1, 10
+ @pageNum int,
+ @pageSize int
+ as
+ select *
+ from Contacts c
+ order by c.id
+ offset (@pageNum - 1) * @pageSize rows
+ fetch next @pageSize rows only
+ select count(*) total from Contacts
+
+
